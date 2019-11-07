@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+	<h1>User List</h1>
+	{% for instance in querylist %}
+		<a href="u/{{ instance.username }}">{{instance.username }}</a>
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+	<h1>Profile</h1>
+	{% if instance.photo %}
+		<img src="{{instance.photo.url}}" alt="profile_photo">
+	{% elif %}
+		<img src="{% static 'img/accounts/profile.png' %}">
+	{% endif %}
+	<h2>@{{instance.user}}</h2>
+	<p>{{instance.bio}}</p>
+{% endblock %}

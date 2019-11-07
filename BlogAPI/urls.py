@@ -26,7 +26,7 @@ from main import views as main_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('main.urls', 'main'), namespace="main")),
-    # path('u/', include(('accounts.urls', 'accounts'), namespace="accounts")),
+    path('', include(('accounts.urls', 'accounts'), namespace="accounts")),
     path('post/', include(('post.urls','post'), namespace="posts")),
 ]
 
