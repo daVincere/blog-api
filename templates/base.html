@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>mPharma | Blog</title>
+</head>
+<body>
+	<!-- <link rel="stylesheet" type="text/css" href=""> -->
+	<h1><a href="{% url 'main:index' %}">Hello, World!</a></h1>
+	{% block content %}
+	<h3>Below is the list of all the posts:</h3>
+	{% for instance in queryset %}
+		<a href="{{instance.get_absolute_url}}">{{instance.heading}}</a></br>
+	{% endfor %}
+	<h3>You can create your post too -- </h3>
+	<a href="{% url 'posts:create'%}">Create</a>
+	{% endblock %}
+</body>
+</html>
