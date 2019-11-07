@@ -4,6 +4,8 @@
 {% block content %}
 	<h1>User List</h1>
 	{% for instance in querylist %}
-		<a href="u/{{ instance.username }}">{{instance.username }}</a>
+		<p>See <a href="{{ instance.get_absolute_url }}">{{instance.user.username}}</a></p>
+		<a href="{{ instance.get_absolute_url}}/follow">follow</a>
+		</br>
 	{% endfor %}
 {% endblock %}

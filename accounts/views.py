@@ -47,7 +47,7 @@ def logout_view(request):
 
 @login_required
 def user_list(request):
-	querylist = User.objects.all()
+	querylist = Profile.objects.all()
 	return render(request, 'accounts/user_list.html', {'querylist': querylist})
 
 # User's Public Profile
@@ -71,3 +71,10 @@ def self_profile(request):
 	}
 
 	return render(request, 'accounts/self_profile.html', context)
+
+
+def follow(request):
+	return redirect('accounts:user_list')
+
+def unfollow(request):
+	return redirect('accounts:user_list')

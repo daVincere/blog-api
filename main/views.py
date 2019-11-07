@@ -2,15 +2,6 @@ from django.shortcuts import render
 from post.models import Post
 
 # Create your views here.
-def index(request):
-    post_list = Post.objects.all()
-
-    context = {
-        'queryset' : post_list,
-    }
-    return render(request, "base.html", context)
-
-
 def error400(request, exception):
     template = 'errors/error.html'
     context = {}
