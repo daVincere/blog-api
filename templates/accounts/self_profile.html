@@ -5,9 +5,9 @@
 	<h1>Profile</h1>
 	{% if instance.photo %}
 		<img src="{{instance.photo.url}}" alt="profile_photo">
-	{% elif %}
+	{% else %}
 		<img src="{% static 'img/accounts/profile.png' %}">
 	{% endif %}
-	<h2>@{{instance.user}}</h2>
+	<h2>@{{instance.user.username}}</h2>
 	<p>{{instance.bio}}</p>
 {% endblock %}

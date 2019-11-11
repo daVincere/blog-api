@@ -37,10 +37,3 @@ def post_view(request, slug):
 	}
 	return render(request, 'post/view.html', context)
 
-def index(request):
-    post_list = Post.objects.all()
-
-    context = {
-        'queryset' : post_list,
-    }
-    return render(request, "base.html", context)

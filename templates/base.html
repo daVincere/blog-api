@@ -7,6 +7,7 @@
 <body>
 	<!-- <link rel="stylesheet" type="text/css" href=""> -->
 	<h1><a href="{% url 'main:index' %}">mPharma</a></h1>
+	<p><a href="{% url 'accounts:self_profile' %}">{{current_user}}</a></p>
 	{% if user.is_authenticated %}
 		<a href="{% url 'accounts:logout_view' %}">Logout</a>
 		<a href="{% url 'accounts:user_list' %}"> User List </a>
@@ -21,5 +22,19 @@
 	<h3>You can create your post too -- </h3>
 	<a href="{% url 'posts:create'%}">Create</a>
 	{% endblock %}
+
+	<h3>Following</h3>
+	{% for x in request.user.profile.get_following %}
+		<p>{{ x.user.username }}</p>
+		{% empty %}
+		<p>Not following anyone.</p>
+	{% endfor %}
+	<hr/>
+	<h3>Followed By</h3>
+	{% for x in request.user.profile.followed_by.all %}
+		<p>{{ x.user.username }}</p>
+		{% empty %}
+		<p>Not followed anyone.</p>
+	{% endfor %}
 </body>
 </html>

@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import get_object_or_404
-from accounts.forms import SignUpForm
-from .models import Profile 
+from accounts.forms import SignUpForm, ProfileForm
+from .models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -64,17 +64,46 @@ def public_profile(request, username):
 # User's own profile
 @login_required
 def self_profile(request):
-	instance = get_object_or_404(Profile, user=request.user)
-
+	instance = get_object_or_404(Profile, user__username=request.user.username)
+	
 	context = {
 		"instance" : instance,
 	}
 
 	return render(request, 'accounts/self_profile.html', context)
 
+@login_required
+def update_profile(request):
+	"""
+		Updates the user profile
+	"""
+	instance = get_object_or_404(Profile, user__username=request.user.username)
 
-def follow(request):
-	return redirect('accounts:user_list')
+	form = ProfileForm(request.POST or None, request.FILES or None, instance=instance)
+	
+	if request.POST:		
+		if form.is_valid():
+			instance = form.save(commit=False)
+			instance.save()
+			messages.success(request,"Edited nicely!")
+			return HttpResponseRedirect(instance.get_absolute_url())
+		else:
+			messages.error(request, "Sorry! Unable to Register Updates.", extra_tags="")
+	
+	context = {
+		"instance" : instance,
+	}
+	
+	return render(request, 'accounts/update_profile.html', context)
 
-def unfollow(request):
-	return redirect('accounts:user_list')
+
+
+def follow(request, username):
+	user_origin = Profile.objects.get(user__username=username)
+	user_profile = Profile.objects.get(user__username=request.user.username)
+	
+	if user_origin in user_profile.following.all():
+		user_profile.following.remove(user_origin)
+	else:
+		user_profile.following.add(user_origin)
+	return redirect('main:index')

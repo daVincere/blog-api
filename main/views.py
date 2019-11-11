@@ -1,6 +1,16 @@
 from django.shortcuts import render
 from post.models import Post
+from accounts.models import Profile
+# from django.config.auth.models import User
 
+def index(request):
+    post_list = Post.objects.all()
+    context = {
+        'queryset' : post_list,
+    }
+    
+    return render(request, "base.html", context)
+    
 # Create your views here.
 def error400(request, exception):
     template = 'errors/error.html'
